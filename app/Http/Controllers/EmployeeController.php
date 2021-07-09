@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Employee;
+use Faker\Provider\Company;
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
@@ -28,7 +30,11 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        //
+        $companies = Company::all();
+
+        return view('employees.create', [
+            'companies' => $companies,
+        ]);
     }
 
     /**
@@ -50,7 +56,13 @@ class EmployeeController extends Controller
      */
     public function show($id)
     {
-        //
+        $companies = Company::all();
+        $employee = Employee::find($id);
+
+        return view('companies.show', [
+            'employee' => $employee,
+            'companies' => $companies,
+        ]);
     }
 
     /**
@@ -61,7 +73,13 @@ class EmployeeController extends Controller
      */
     public function edit($id)
     {
-        //
+        $companies = Company::all();
+        $employee = Employee::find($id);
+
+        return view('companies.edit', [
+            'employee' => $employee,
+            'companies' => $companies,
+        ]);
     }
 
     /**
@@ -84,6 +102,6 @@ class EmployeeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Employee::destroy($id);
     }
 }

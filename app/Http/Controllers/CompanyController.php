@@ -29,7 +29,7 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        //
+        return view('companies.create');
     }
 
     /**
@@ -51,7 +51,11 @@ class CompanyController extends Controller
      */
     public function show($id)
     {
-        //
+        $company = Company::find($id);
+
+        return view('companies.show', [
+            '$company' => $company,
+        ]);
     }
 
     /**
@@ -62,7 +66,11 @@ class CompanyController extends Controller
      */
     public function edit($id)
     {
-        //
+        $company = Company::find($id);
+
+        return view('companies.edit', [
+            'company' => $company,
+        ]);
     }
 
     /**

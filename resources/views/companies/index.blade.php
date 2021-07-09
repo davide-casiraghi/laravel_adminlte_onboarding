@@ -10,12 +10,10 @@
             <h3 class="card-title">Companies</h3>
 
             <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                    <i class="fas fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-                    <i class="fas fa-times"></i>
-                </button>
+                <a class="btn btn-primary btn-sm" href="{{route('companies.create')}}">
+                    <i class="fas fa-plus"></i>
+                    Add
+                </a>
             </div>
         </div>
         <div class="card-body p-0">
@@ -30,9 +28,6 @@
                     </th>
                     <th style="width: 30%">
                         Team Members
-                    </th>
-                    <th>
-                        Project Progress
                     </th>
                     <th style="width: 8%" class="text-center">
                         Status
@@ -70,15 +65,6 @@
                                 <img alt="Avatar" class="table-avatar" src="../../dist/img/avatar4.png">
                             </li>
                         </ul>
-                    </td>
-                    <td class="project_progress">
-                        <div class="progress progress-sm">
-                            <div class="progress-bar bg-green" role="progressbar" aria-valuenow="57" aria-valuemin="0" aria-valuemax="100" style="width: 57%">
-                            </div>
-                        </div>
-                        <small>
-                            57% Complete
-                        </small>
                     </td>
                     <td class="project-state">
                         <span class="badge badge-success">Success</span>
@@ -123,15 +109,6 @@
                                 <img alt="Avatar" class="table-avatar" src="../../dist/img/avatar2.png">
                             </li>
                         </ul>
-                    </td>
-                    <td class="project_progress">
-                        <div class="progress progress-sm">
-                            <div class="progress-bar bg-green" role="progressbar" aria-valuenow="47" aria-valuemin="0" aria-valuemax="100" style="width: 47%">
-                            </div>
-                        </div>
-                        <small>
-                            47% Complete
-                        </small>
                     </td>
                     <td class="project-state">
                         <span class="badge badge-success">Success</span>
