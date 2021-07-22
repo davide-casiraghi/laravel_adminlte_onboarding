@@ -77,17 +77,15 @@
                 @endforeach
                 </tbody>
             </table>
-
-            {{-- Pagination --}}
-            <div class="row">
-                <div class="col-12">
-                    {{ $companies->links() }}
-
-                    {!! $companies->links() !!}
-                </div>
-            </div>
         </div>
         <!-- /.card-body -->
+    </div>
+
+    {{-- Pagination --}}
+    <div class="row mt-4">
+        <div class="mx-auto">
+            {{ $companies->links() }}
+        </div>
     </div>
 @endsection
 

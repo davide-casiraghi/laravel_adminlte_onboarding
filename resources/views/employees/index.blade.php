@@ -90,15 +90,15 @@
                 @endforeach
                 </tbody>
             </table>
-
-            {{-- Pagination --}}
-            <div class="row">
-                <div class="col-12">
-                    {{ $employees->links() }}
-                </div>
-            </div>
         </div>
         <!-- /.card-body -->
+    </div>
+
+    {{-- Pagination --}}
+    <div class="row mt-4">
+        <div class="mx-auto">
+            {{ $employees->links() }}
+        </div>
     </div>
 @endsection
 
