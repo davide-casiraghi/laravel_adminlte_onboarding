@@ -10,6 +10,11 @@
             <h3 class="card-title">Companies</h3>
 
             <div class="card-tools">
+                @if($companies->total() > 0)
+                    <div class="d-inline mr-3 mt-2">
+                        Total companies: {{$companies->total()}}
+                    </div>
+                @endif
                 <a class="btn btn-primary btn-sm" href="{{route('companies.create')}}">
                     <i class="fas fa-plus"></i>
                     Add

@@ -10,6 +10,11 @@
             <h3 class="card-title">Employees</h3>
 
             <div class="card-tools">
+                @if($employees->total() > 0)
+                    <div class="d-inline mr-3 mt-2">
+                        Total employees: {{$employees->total()}}
+                    </div>
+                @endif
                 <a class="btn btn-primary btn-sm" href="{{route('employees.create')}}">
                     <i class="fas fa-plus"></i>
                     Add
@@ -84,7 +89,6 @@
                                     Delete
                                 </button>
                             </form>
-
                         </td>
                     </tr>
                 @endforeach
