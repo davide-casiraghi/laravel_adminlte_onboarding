@@ -44,10 +44,9 @@ class CompanyController extends Controller
         $data = $request->validated();
 
         if ($image = $request->file('image')) {
-            $destinationPath = public_path('images');
-            $logoImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
-            $image->move($destinationPath, $logoImage);
-            $data['logo'] = "$logoImage";
+            $filename = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            $image->storeAs('public/',$filename);
+            $data['logo'] = "$filename";
         }
         Company::create($data);
 
@@ -97,10 +96,9 @@ class CompanyController extends Controller
         $data = $request->validated();
 
         if ($image = $request->file('image')) {
-            $destinationPath = public_path('images');
-            $logoImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
-            $image->move($destinationPath, $logoImage);
-            $data['logo'] = "$logoImage";
+            $filename = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            $image->storeAs('public/',$filename);
+            $data['logo'] = "$filename";
         }else{
             unset($data['logo']);
         }

@@ -32,7 +32,7 @@
                     </div>
                 </div>
                 <div class="col-12 col-md-12 col-lg-4 order-1 order-md-2">
-                    <img src="{{asset('images')}}/{{ $company->logo }}" width="300px" >
+                    <img src="{{asset('storage')}}/{{ $company->logo }}" width="300px" >
                 </div>
             </div>
         </div>

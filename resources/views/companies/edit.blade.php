@@ -50,7 +50,7 @@
 
                         <div class="col-xs-12 col-sm-12 col-md-12">
                             <div class="form-group">
-                                <img src="{{asset('images')}}/{{ $company->logo }}" width="300px" >
+                                <img src="{{asset('storage')}}/{{ $company->logo }}" width="300px" >
                                 <br>
                                 <strong>Image:</strong>
                                 <input type="file" name="image" class="form-control" placeholder="image">
