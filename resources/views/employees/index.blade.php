@@ -23,117 +23,80 @@
                     <th style="width: 1%">
                         #
                     </th>
-                    <th style="width: 20%">
-                        Project Name
+                    <th style="width: 13%">
+                        First Name
+                    </th>
+                    <th style="width: 13%">
+                        Last Name
+                    </th>
+                    <th style="width: 18%">
+                        Email
+                    </th>
+                    <th style="width: 15%">
+                        Phone
+                    </th>
+                    <th style="width: 10%">
+                        Company
                     </th>
                     <th style="width: 30%">
-                        Team Members
-                    </th>
-                    <th style="width: 8%" class="text-center">
-                        Status
-                    </th>
-                    <th style="width: 20%">
                     </th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>
-                        #
-                    </td>
-                    <td>
-                        <a>
-                            AdminLTE v3
-                        </a>
-                        <br/>
-                        <small>
-                            Created 01.01.2019
-                        </small>
-                    </td>
-                    <td>
-                        <ul class="list-inline">
-                            <li class="list-inline-item">
-                                <img alt="Avatar" class="table-avatar" src="../../dist/img/avatar.png">
-                            </li>
-                            <li class="list-inline-item">
-                                <img alt="Avatar" class="table-avatar" src="../../dist/img/avatar2.png">
-                            </li>
-                            <li class="list-inline-item">
-                                <img alt="Avatar" class="table-avatar" src="../../dist/img/avatar3.png">
-                            </li>
-                            <li class="list-inline-item">
-                                <img alt="Avatar" class="table-avatar" src="../../dist/img/avatar4.png">
-                            </li>
-                        </ul>
-                    </td>
-                    <td class="project-state">
-                        <span class="badge badge-success">Success</span>
-                    </td>
-                    <td class="project-actions text-right">
-                        <a class="btn btn-primary btn-sm" href="#">
-                            <i class="fas fa-folder">
-                            </i>
-                            View
-                        </a>
-                        <a class="btn btn-info btn-sm" href="#">
-                            <i class="fas fa-pencil-alt">
-                            </i>
-                            Edit
-                        </a>
-                        <a class="btn btn-danger btn-sm" href="#">
-                            <i class="fas fa-trash">
-                            </i>
-                            Delete
-                        </a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        #
-                    </td>
-                    <td>
-                        <a>
-                            AdminLTE v3
-                        </a>
-                        <br/>
-                        <small>
-                            Created 01.01.2019
-                        </small>
-                    </td>
-                    <td>
-                        <ul class="list-inline">
-                            <li class="list-inline-item">
-                                <img alt="Avatar" class="table-avatar" src="../../dist/img/avatar.png">
-                            </li>
-                            <li class="list-inline-item">
-                                <img alt="Avatar" class="table-avatar" src="../../dist/img/avatar2.png">
-                            </li>
-                        </ul>
-                    </td>
-                    <td class="project-state">
-                        <span class="badge badge-success">Success</span>
-                    </td>
-                    <td class="project-actions text-right">
-                        <a class="btn btn-primary btn-sm" href="#">
-                            <i class="fas fa-folder">
-                            </i>
-                            View
-                        </a>
-                        <a class="btn btn-info btn-sm" href="#">
-                            <i class="fas fa-pencil-alt">
-                            </i>
-                            Edit
-                        </a>
-                        <a class="btn btn-danger btn-sm" href="#">
-                            <i class="fas fa-trash">
-                            </i>
-                            Delete
-                        </a>
-                    </td>
-                </tr>
+                @foreach($employees as $employee)
+                    <tr>
+                        <td>
+                            {{$employee->id}}
+                        </td>
+                        <td>
+                            {{$employee->first_name}}
+                        </td>
+                        <td>
+                            {{$employee->last_name}}
+                        </td>
+                        <td>
+                            {{$employee->email}}
+                        </td>
+                        <td>
+                            {{$employee->phone}}
+                        </td>
+                        <td>
+                            {{$employee->company->name}}
+                        </td>
+                        <td class="project-actions text-right">
+                            <a class="btn btn-primary btn-sm" href="{{route('employees.show', $employee->id)}}">
+                                <i class="fas fa-folder">
+                                </i>
+                                View
+                            </a>
+                            <a class="btn btn-info btn-sm" href="{{route('employees.edit', $employee->id)}}">
+                                <i class="fas fa-pencil-alt">
+                                </i>
+                                Edit
+                            </a>
 
+                            <form action="{{ route('employees.destroy',$employee->id) }}" method="POST" class="d-inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm">
+                                    <i class="fas fa-trash">
+                                    </i>
+                                    Delete
+                                </button>
+                            </form>
+
+                        </td>
+                    </tr>
+                @endforeach
                 </tbody>
             </table>
+
+            {{-- Pagination --}}
+            <div class="row">
+                <div class="col-12">
+                    {{ $employees->links() }}
+                </div>
+            </div>
         </div>
         <!-- /.card-body -->
     </div>

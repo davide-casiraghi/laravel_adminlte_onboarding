@@ -1,12 +1,13 @@
 @extends('layouts.dashboard')
 
 @section('title')
-    Employee Add
+    Employee Edit
 @endsection
 
 @section('content')
-    <form action="{{ route('employees.store') }}" method="POST">
+    <form action="{{ route('employees.update',$employee->id) }}" method="POST">
         @csrf
+        @method('PUT')
         <div class="row">
             <div class="col-md-12">
                 <div class="card card-secondary">
@@ -18,14 +19,14 @@
                                   'title' => "First Name",
                                   'name' => 'first_name',
                                   'placeholder' => '',
-                                  'value' => old('first_name'),
+                                  'value' => $employee->first_name,
                                   'required' => true,
                             ])
                         @include('partials.forms.input', [
                                   'title' => "Last Name",
                                   'name' => 'last_name',
                                   'placeholder' => '',
-                                  'value' => old('last_name'),
+                                  'value' => $employee->last_name,
                                   'required' => true,
                             ])
 
@@ -33,7 +34,7 @@
                               'title' => "Email",
                               'name' => 'email',
                               'placeholder' => '',
-                              'value' => old('email'),
+                              'value' => $employee->email,
                               'required' => false,
                         ])
 
@@ -41,16 +42,16 @@
                               'title' => "Phone",
                               'name' => 'phone',
                               'placeholder' => '',
-                              'value' => old('phone'),
+                              'value' => $employee->phone,
                               'required' => false,
                         ])
 
                         @include('partials.forms.select', [
-                            'title' => "Company",
+                            'title' => "Employee",
                             'name' => 'company_id',
                             'placeholder' => 'Select company',
                             'records' => $companies,
-                            //'selected' => $post->category_id,
+                            'selected' => $employee->company_id,
                             'liveSearch' => 'false',
                             'mobileNativeMenu' => true,
                             'required' => true,
@@ -64,7 +65,7 @@
         <div class="row mb-4">
             <div class="col-12">
                 <a href="{{route('employees.index')}}" class="btn btn-secondary">Cancel</a>
-                <input type="submit" value="Create new Employee" class="btn btn-success float-right">
+                <input type="submit" value="Update Employee" class="btn btn-success float-right">
             </div>
         </div>
     </form>
