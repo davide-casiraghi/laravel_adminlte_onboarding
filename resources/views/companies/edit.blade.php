@@ -39,23 +39,12 @@
                               'required' => false,
                         ])
 
-                       {{-- @include('partials.forms.upload-image', [
+                       @include('partials.forms.upload-image', [
                             'title' => "Logo",
                             'name' => 'image',
-                            'folder' => 'logo',
-                            'collection' => 'logo',
-                            'entity' => $company,
-                            //'value' => '',
-                        ])--}}
+                            'value' => $company->logo,
+                        ])
 
-                        <div class="col-xs-12 col-sm-12 col-md-12">
-                            <div class="form-group">
-                                <img src="{{asset('storage')}}/{{ $company->logo }}" width="300px" >
-                                <br>
-                                <strong>Image:</strong>
-                                <input type="file" name="image" class="form-control" placeholder="image">
-                            </div>
-                        </div>
                     </div>
                     <!-- /.card-body -->
                 </div>

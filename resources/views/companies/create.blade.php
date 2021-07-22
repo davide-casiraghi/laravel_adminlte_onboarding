@@ -38,19 +38,11 @@
                               'required' => false,
                         ])
 
-                        {{--@include('partials.forms.upload-image', [
-                            'title' => "Logo",
-                            'name' => 'logo',
-                            'folder' => 'logo',
-                            'value' => '',
-                        ])--}}
-
-                        <div class="col-xs-12 col-sm-12 col-md-12">
-                            <div class="form-group">
-                                <strong>Image:</strong>
-                                <input type="file" name="image" class="form-control" placeholder="image">
-                            </div>
-                        </div>
+                        @include('partials.forms.upload-image', [
+                           'title' => "Logo",
+                           'name' => 'image',
+                           'value' => '',
+                       ])
 
                     </div>
                     <!-- /.card-body -->

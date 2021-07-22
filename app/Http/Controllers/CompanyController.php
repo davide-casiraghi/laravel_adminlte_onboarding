@@ -48,6 +48,7 @@ class CompanyController extends Controller
             $image->storeAs('public/',$filename);
             $data['logo'] = "$filename";
         }
+        
         Company::create($data);
 
         return redirect()->route('companies.index')
