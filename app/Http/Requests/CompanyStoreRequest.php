@@ -24,9 +24,10 @@ class CompanyStoreRequest extends FormRequest
      */
     public function rules()
     {
+        //dd($this->company);
         $rules = [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required','string','email','max:255', Rule::unique('companies')->ignore($this->user()->id)],
+            'email' => ['required','string','email','max:255', Rule::unique('companies')->ignore($this->company)],
             'website' => ['nullable', 'string'],
         ];
 
