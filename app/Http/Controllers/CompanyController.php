@@ -43,7 +43,7 @@ class CompanyController extends Controller
     {
         $data = $request->validated();
 
-        if ($image = $request->file('logo')) {
+        if ($image = $request->file('image')) {
             $destinationPath = public_path('images');
             $logoImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
             $image->move($destinationPath, $logoImage);
