@@ -40,7 +40,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <li class="nav-item">
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-                    <button type="submit">Logout</button>
+                    <button class="btn btn-block btn-default" type="submit">Logout</button>
                 </form>
             </li>
         </ul>
@@ -51,7 +51,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
         <a href="index3.html" class="brand-link">
-            <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
             <span class="brand-text font-weight-light">AdminLTE 3</span>
         </a>
 
