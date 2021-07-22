@@ -1,12 +1,13 @@
 @extends('layouts.dashboard')
 
 @section('title')
-    Company Add
+    Company Edit
 @endsection
 
 @section('content')
-    <form action="{{ route('companies.store') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('companies.update',$company->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
+        @method('PUT')
         <div class="row">
             <div class="col-md-12">
                 <div class="card card-secondary">
@@ -18,7 +19,7 @@
                               'title' => "Name",
                               'name' => 'name',
                               'placeholder' => '',
-                              'value' => old('name'),
+                              'value' => $company->name,
                               'required' => true,
                         ])
 
@@ -26,7 +27,7 @@
                               'title' => "Email",
                               'name' => 'email',
                               'placeholder' => '',
-                              'value' => old('email'),
+                              'value' => $company->email,
                               'required' => true,
                         ])
 
@@ -34,24 +35,27 @@
                               'title' => "Website",
                               'name' => 'website',
                               'placeholder' => '',
-                              'value' => old('website'),
+                              'value' => $company->website,
                               'required' => false,
                         ])
 
-                        {{--@include('partials.forms.upload-image', [
+                       {{-- @include('partials.forms.upload-image', [
                             'title' => "Logo",
-                            'name' => 'logo',
+                            'name' => 'image',
                             'folder' => 'logo',
-                            'value' => '',
+                            'collection' => 'logo',
+                            'entity' => $company,
+                            //'value' => '',
                         ])--}}
 
                         <div class="col-xs-12 col-sm-12 col-md-12">
                             <div class="form-group">
+                                <img src="{{asset('images')}}/{{ $company->logo }}" width="300px" >
+                                <br>
                                 <strong>Image:</strong>
                                 <input type="file" name="image" class="form-control" placeholder="image">
                             </div>
                         </div>
-
                     </div>
                     <!-- /.card-body -->
                 </div>
@@ -61,7 +65,7 @@
         <div class="row mb-4">
             <div class="col-12">
                 <a href="{{route('companies.index')}}" class="btn btn-secondary">Cancel</a>
-                <input type="submit" value="Create new Company" class="btn btn-success float-right">
+                <input type="submit" value="Update Company" class="btn btn-success float-right">
             </div>
         </div>
     </form>
