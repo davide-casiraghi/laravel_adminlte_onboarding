@@ -2,30 +2,31 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CompanyStoreRequest;
 use App\Models\Company;
-use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
+use Illuminate\Http\RedirectResponse;
 
 class CompanyController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function index()
     {
-        $companies = null;
+        $companies = Company::paginate(10);
 
         return view('companies.index', [
             'companies' => $companies,
-            //'searchParameters' => $searchParameters,
         ]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function create()
     {
@@ -35,26 +36,37 @@ class CompanyController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  CompanyStoreRequest  $request
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(CompanyStoreRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        if ($image = $request->file('logo')) {
+            $destinationPath = public_path('images');
+            $logoImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            $image->move($destinationPath, $logoImage);
+            $data['logo'] = "$logoImage";
+        }
+        Company::create($data);
+
+        return redirect()->route('companies.index')
+            ->with('success', 'Company created successfully');
     }
 
     /**
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id)
     {
         $company = Company::find($id);
 
         return view('companies.show', [
-            '$company' => $company,
+            'company' => $company,
         ]);
     }
 
@@ -62,9 +74,9 @@ class CompanyController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id)
     {
         $company = Company::find($id);
 
@@ -76,26 +88,46 @@ class CompanyController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  CompanyStoreRequest  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(CompanyStoreRequest $request, int $id): RedirectResponse
     {
-        //
+        $data = $request->validated();
+
+        if ($image = $request->file('image')) {
+            $destinationPath = public_path('images');
+            $logoImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            $image->move($destinationPath, $logoImage);
+            $data['logo'] = "$logoImage";
+        }else{
+            unset($data['logo']);
+        }
+
+        Company::find($id)->update($data);
+
+        return redirect()->route('companies.index')
+            ->with('success', 'Company updated successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
-        Company::destroy($id);
+        try{
+            Company::destroy($id);
+        }
+        catch (QueryException $e){
+            return redirect()->route('companies.index')
+                ->with('error', 'Company not deleted. Please remove the companies employees before.');
+        }
+
+        return redirect()->route('companies.index')
+            ->with('success', 'Company deleted successfully');
     }
-
-
-
 }

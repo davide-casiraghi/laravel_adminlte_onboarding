@@ -2,35 +2,36 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EmployeeStoreRequest;
 use App\Models\Employee;
-use Faker\Provider\Company;
-use Illuminate\Http\Request;
+use App\Models\Company;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Response;
 
 class EmployeeController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|Response
      */
     public function index()
     {
-        $employees = null;
+        $employees = Employee::paginate(10);
 
         return view('employees.index', [
             'employees' => $employees,
-            //'searchParameters' => $searchParameters,
         ]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|Response
      */
     public function create()
     {
-        $companies = Company::all();
+        $companies = Company::pluck('name','id');
 
         return view('employees.create', [
             'companies' => $companies,
@@ -40,28 +41,29 @@ class EmployeeController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  EmployeeStoreRequest  $request
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(EmployeeStoreRequest $request)
     {
-        //
+        $employee = Employee::create($request->validated());
+
+        return redirect()->route('employees.index')
+            ->with('success', 'Employee created successfully');
     }
 
     /**
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|Response
      */
-    public function show($id)
+    public function show(int $id)
     {
-        $companies = Company::all();
         $employee = Employee::find($id);
 
-        return view('companies.show', [
+        return view('employees.show', [
             'employee' => $employee,
-            'companies' => $companies,
         ]);
     }
 
@@ -69,14 +71,14 @@ class EmployeeController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|Response
      */
-    public function edit($id)
+    public function edit(int $id)
     {
-        $companies = Company::all();
         $employee = Employee::find($id);
+        $companies = Company::pluck('name','id');
 
-        return view('companies.edit', [
+        return view('employees.edit', [
             'employee' => $employee,
             'companies' => $companies,
         ]);
@@ -85,23 +87,29 @@ class EmployeeController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  EmployeeStoreRequest  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(EmployeeStoreRequest $request, int $id)
     {
-        //
+        Employee::find($id)->update($request->validated());
+
+        return redirect()->route('employees.index')
+            ->with('success', 'Employee updated successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         Employee::destroy($id);
+
+        return redirect()->route('employees.index')
+            ->with('success', 'Employee deleted successfully');
     }
 }
